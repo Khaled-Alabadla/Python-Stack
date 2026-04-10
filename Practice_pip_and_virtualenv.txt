@@ -1,0 +1,7 @@
+1. pip list: Shows packages in the current environment. I saw only basic tools.
+2. deactivate: Exit the virtual environment. pip list showed many system packages.
+3. pip install Django: Downloads and installs the Django framework into the active environment.
+4. pip freeze: Lists packages in a specific format (Name==Version), used for sharing project requirements.
+5. pip freeze > requirements.txt: Redirected the output into a file. Inside the file, I found the list of my environment packages.
+6. pip uninstall Django: Removes the package from the environment.
+7. pip show Django: Displays details like version and location. After uninstalling, it showed nothing.
