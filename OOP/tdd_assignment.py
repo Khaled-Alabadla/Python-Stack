@@ -1,19 +1,46 @@
 import unittest
 
 def reverseList(arr):
-    pass
+    left = 0
+    right = len(arr) - 1
+    while left < right:
+        arr[left], arr[right] = arr[right], arr[left]
+        left += 1
+        right -= 1
+    return arr
+
 
 def isPalindrome(word):
-    pass
+    for i in range(len(word) // 2):
+        if word[i] != word[-(i + 1)]:
+            return False
+    return True
+
 
 def coins(cents):
-    pass
+    quarters = cents // 25
+    cents %= 25
+    dimes = cents // 10
+    cents %= 10
+    nickels = cents // 5
+    cents %= 5
+    pennies = cents
+    return [quarters, dimes, nickels, pennies]
+
 
 def factorial(n):
-    pass
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+
 
 def fibonacci(n):
-    pass
+    if n == 0:
+        return 0
+    if n == 1:
+        return 1
+    return fibonacci(n - 1) + fibonacci(n - 2)
+
 
 class TDDAssignmentTests(unittest.TestCase):
     
