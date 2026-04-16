@@ -15,7 +15,7 @@ To build this system, I followed these key steps:
 4. **Method Chaining**: Added `return self` to methods to allow for expressive, single-line commands.
 
 ## Output Screenshot
-![User Assignment Terminal Output](/output.png)
+![User Assignment Terminal Output](./output.png)
 
 ## Setup & Execution
 1. Ensure Python is installed.
