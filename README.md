@@ -6,7 +6,9 @@ Welcome to my Python Stack assignment repository! This repository contains a col
 
 | Folder | Description | Status |
 | :--- | :--- | :--- |
-| **[OOP](./OOP)** | Object-Oriented Programming assignments, including the Zoo Management System. | ✅ Complete |
+| **[User](./OOP/user)** | Basic class structure and financial logic. | ✅ Complete |
+| **[Zoo](./OOP/zoo)** | Zoo Management System exploring base classes and specialization. | ✅ Complete |
+| **[Chaining](./OOP/chaining)** | Demonstration of the method chaining pattern (`return self`). | ✅ Complete |
 | **[Fundamentals](./Fundamentals)** | Core Python basics, loops, and function exercises. | ✅ Complete |
 | **[Setup](./Setup)** | Initial environment configuration and testing. | ✅ Complete |
 

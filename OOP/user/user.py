@@ -1,12 +1,15 @@
+# Class to represent a user and their account balance
 class User:
   def __init__(self, name, email):
     self.name = name
     self.email = email
     self.balance = 0
 
+  # Increase account balance by specified amount
   def make_deposit(self, amount):
     self.balance += amount
 
+  # Decrease account balance by amount if funds are sufficient
   def make_withdrawal(self, amount):
     if self.balance < amount:
       print("Your balance is not enough to withdraw")
@@ -15,6 +18,7 @@ class User:
     self.balance -= amount
     
 
+  # Transfer specified amount to another User instance
   def transfer_money(self, reciepent, amount):
     if(self.balance < amount):
       print("Your balance is not enough to withdraw")
@@ -26,6 +30,7 @@ class User:
     print(f"{reciepent.name} balance is: {reciepent.balance}")
 
 
+# Initialize example users
 user1 = User("Khaled Alabadla", "kh.es.abadla@gmail.com")
 user2 = User("Bilal Qanoa", "bilalqanoa@gmail.com")
 user3 = User("Salah Ahmed", "salahahmed@gmail.com")
