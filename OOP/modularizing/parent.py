@@ -8,7 +8,7 @@ class User:
         return "hello"
 
 if __name__ == "__main__":
-  print(square(5))
-  user = User("Anna")
-  print(user.name)
-  print(user.say_hello())
+    print(square(5))
+    user = User("Anna")
+    print(user.name)
+    print(user.say_hello())
