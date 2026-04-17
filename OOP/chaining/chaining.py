@@ -43,7 +43,7 @@ user1.make_deposit(100).make_deposit(200).make_deposit(300).make_withdrawal(300)
 print(f"Net balance of {user1.name} is {user1.balance}")
 
 # Another example of chaining
-user2.make_deposit(100).make_deposit(200).make_withdrawal(100).make_withdrawal(100)
+user2.make_deposit(10000).make_deposit(20000).make_withdrawal(100).make_withdrawal(100)
 print(f"Net balance of {user2.name} is {user2.balance}")
 
 # Chaining multiple withdrawals
