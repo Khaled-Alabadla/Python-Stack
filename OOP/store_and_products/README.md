@@ -8,11 +8,6 @@ An object-oriented programming (OOP) assignment in Python that simulates a simpl
 - **`store.py`**: Defines the `Store` class which manages a list of `Product` instances. It supports adding products, selling products (with error handling), and applying store-wide or category-specific price changes.
 - **`run_store.py`**: A demonstration script that initializes a store, adds several products, and performs various operations to test the system's logic.
 
-## Getting Started
-
-### Prerequisites
-- Python 3.x installed on your system.
-
 ### Steps to Run
 
 1.  **Navigate to the folder**:
