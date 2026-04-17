@@ -41,9 +41,9 @@ user1.make_deposit(300)
 user1.make_withdrawal(300)
 print(f"Net balance of {user1.name} is {user1.balance}")
 
-user2.make_deposit(100)
-user2.make_deposit(200)
-user2.make_withdrawal(100)
+user2.make_deposit(10000)
+user2.make_deposit(20000)
+user2.make_withdrawal(200)
 user2.make_withdrawal(100)
 print(f"Net balance of {user2.name} is {user2.balance}")
 
