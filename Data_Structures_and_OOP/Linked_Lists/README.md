@@ -7,6 +7,7 @@ This repository contains Python implementations of Singly and Doubly Linked List
 A basic linear data structure where each node points only to the next node.
 
 ### Key Methods:
+
 - `add_to_front(val)`: Adds a node at the beginning of the list.
 - `add_to_back(val)`: Adds a node at the end of the list.
 - `print_values()`: Traverses and prints all values in order.
@@ -21,6 +22,7 @@ A basic linear data structure where each node points only to the next node.
 An advanced data structure where each node contains pointers to both the **next** and **previous** nodes, allowing for bidirectional traversal.
 
 ### Key Methods:
+
 - `add_to_front(val)` / `add_to_back(val)`: efficient additions to either end.
 - `insert_at(val, index)`: Inserts a node at any given index.
 - `remove_val(val)`: Removes a node by value, updating both forward and backward pointers.
@@ -28,11 +30,15 @@ An advanced data structure where each node contains pointers to both the **next*
 - `print_values_backward()`: Backward traversal (Tail -> Head).
 
 ## Usage
+
 Run the following command to see the Singly Linked List file:
+
 ```bash
-python doubly_linked_list.py
+python singly_linked_list.py
 ```
+
 Run the following command to see the Doubly Linked List file:
+
 ```bash
 python doubly_linked_list.py
 ```
