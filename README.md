@@ -4,10 +4,11 @@ Welcome to my Python Stack assignment repository! This repository contains a col
 
 ## 📂 Repository Structure
 
-| Folder                             | Description                                        | Status      |
-| :--------------------------------- | :------------------------------------------------- | :---------- |
-| **[Setup](./Setup)**               | Initial environment configuration and testing.     | ✅ Complete |
-| **[Fundamentals](./Fundamentals)** | Core Python basics, loops, and function exercises. | ✅ Complete |
-| **[OOP](./OOP)**                   | OOP Principles                                     | In progress |
+| Folder                                                 | Description                                              | Status      |
+| :----------------------------------------------------- | :------------------------------------------------------- | :---------- |
+| **[Setup](./Setup)**                                   | Initial environment configuration.                       | ✅ Complete |
+| **[Fundamentals](./Fundamentals)**                     | Core Python basics, loops, and function exercises.       | ✅ Complete |
+| **[OOP](./OOP)**                                       | OOP Principles                                           | ✅ Complete |
+| **[Data Structures & OOP](./Data_Structures_and_OOP)** | Data Structues (Singly Linked Lists, Double Linked List) | In progress |
 
 _Created with ❤️ as part of the Khaled-Alabadla/Python-Stack_
