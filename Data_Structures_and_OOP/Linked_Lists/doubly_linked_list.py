@@ -8,7 +8,6 @@ class DLNode:
         self.next = None
         self.prev = None
 
-
 class DoublyLinkedList:
     """
     A class to represent a doubly linked list.
