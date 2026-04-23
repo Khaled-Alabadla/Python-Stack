@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Playground</title>
+  <!-- Link to external stylesheet -->
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Loop to generate multiple boxes based on 'times' variable from backend -->
+    {% for i in range(times) %}
+    <div class="box">
+    </div>
+    {% endfor %}
+  </div>
+</body>
+
+</html>
