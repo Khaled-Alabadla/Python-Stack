@@ -70,7 +70,7 @@ Stylesheet providing:
 
 - Reset of default browser styles
 - Flexbox layout for responsive box arrangement
-- Styling for individual boxes with cyan background
+- Styling for individual boxes
 
 ## Example URLs
 
