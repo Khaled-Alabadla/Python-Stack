@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkboard</title>
+  <!-- Link to external CSS stylesheet -->
+  <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Loop through rows -->
+    {% for row in range(x) %}
+    <div class="row">
+      <!-- Loop through cells in each row -->
+      {% for cell in range(y) %}
+      <!-- Cell with alternating colors based on position -->
+      <div style="background: {{ color1 if (cell + row) % 2 == 0 else color2 }}" class="cell"></div>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</body>
+
+</html>
