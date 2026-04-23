@@ -30,5 +30,5 @@ python server.py
 3. Open your browser and navigate to:
    - `http://localhost:5000/` - Home page
    - `http://localhost:5000/Champion` - Champion page
-   - `http://localhost:5000/say/YourName` - Personalized greeting
+   - `http://localhost:5000/say/name` - Personalized greeting
    - `http://localhost:5000/repeat/3/Hello` - Repeat "Hello" 3 times
