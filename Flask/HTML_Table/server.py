@@ -20,5 +20,4 @@ def home():
 
 # Run the Flask application
 if __name__ == '__main__':
-    # debug=True enables auto-reload and detailed error messages during development
     app.run(debug=True)
