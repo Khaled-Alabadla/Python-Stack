@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaderboard - Great Number Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container" style="max-width: 600px;">
+        <h1>Leaderboard</h1>
+        <p>Top players by attempt count</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Attempts</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for score in scores %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ score.name }}</td>
+                    <td>{{ score.attempts }}</td>
+                </tr>
+                {% endfor %}
+                {% if not scores %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">No winners yet!</td>
+                </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div style="margin-top: 2rem;">
+            <a href="/" class="btn">Back to Game</a>
+        </div>
+    </div>
+</body>
+</html>

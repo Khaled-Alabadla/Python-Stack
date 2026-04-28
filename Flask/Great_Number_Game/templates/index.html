@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great Number Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <h1>Great Number Game</h1>
+        <p>I am thinking of a number between 1 and 100...<br>Take a guess!</p>
+
+        {% if session.status %}
+        <div class="status-box {{ session.status }}">
+            {% if session.status == 'too_low' %}
+            <span>Low!</span>
+            {% elif session.status == 'too_high' %}
+            <span>High!</span>
+            {% elif session.status == 'correct' %}
+            <span>{{ session.target_num }} was the number!</span>
+            <div class="winner-form">
+                <form action="/submit_score" method="POST">
+                    <input type="text" name="name" placeholder="Enter your name" required>
+                    <br>
+                    <button type="submit" class="btn">Submit Score</button>
+                </form>
+            </div>
+            {% elif session.status == 'lose' %}
+            <span>You Lose!</span>
+            <p style="color: white; margin-top: 0.5rem;">The number was {{ session.target_num }}</p>
+            {% endif %}
+
+            {% if session.status == 'correct' or session.status == 'lose' %}
+            <form action="/reset" method="POST">
+                <button type="submit" class="btn btn-secondary">Play Again!</button>
+            </form>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        {% if not session.status or (session.status != 'correct' and session.status != 'lose') %}
+        <form action="/guess" method="POST">
+            <input type="number" name="guess" min="1" max="100" required>
+            <br>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        {% endif %}
+
+        <div class="attempts">
+            Attempts: {{ session.attempts }} / 5
+        </div>
+
+        <div style="margin-top: 1rem;">
+            <a href="/leaderboard" style="color: var(--primary); text-decoration: none; font-size: 0.9rem;">View
+                Leaderboard</a>
+        </div>
+    </div>
+</body>
+
+</html>
