@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold - Find Your Fortune</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <h1>NINJA<span>GOLD</span></h1>
+            </div>
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="label">Your Gold</span>
+                    <span class="value gold-count">{{ session.gold }}</span>
+                </div>
+                <div class="stat-card">
+                    <span class="label">Moves</span>
+                    <span class="value">{{ session.moves }}/15</span>
+                </div>
+            </div>
+        </header>
+
+        {% if session.game_over %}
+        <div class="game-overlay">
+            <div class="result-card {{ session.result }}">
+                {% if session.result == 'win' %}
+                    <h2>Victory!</h2>
+                    <p>You've gathered enough gold to retire in luxury!</p>
+                {% else %}
+                    <h2>Game Over</h2>
+                    <p>You ran out of moves before reaching your goal.</p>
+                {% endif %}
+                <form action="/process_money" method="post">
+                    <input type="hidden" name="building" value="reset">
+                    <button type="submit" class="reset-btn">Play Again</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        <main class="locations">
+            <div class="location-card">
+                <h3>Farm</h3>
+                <p>(earns 10-20 golds)</p>
+                <form action="/process_money" method="post">
+                    <input type="hidden" name="building" value="farm">
+                    <button type="submit" {% if session.game_over %}disabled{% endif %}>Find Gold!</button>
+                </form>
+            </div>
+
+            <div class="location-card">
+                <h3>Cave</h3>
+                <p>(earns 5-10 golds)</p>
+                <form action="/process_money" method="post">
+                    <input type="hidden" name="building" value="cave">
+                    <button type="submit" {% if session.game_over %}disabled{% endif %}>Find Gold!</button>
+                </form>
+            </div>
+
+            <div class="location-card">
+                <h3>House</h3>
+                <p>(earns 2-5 golds)</p>
+                <form action="/process_money" method="post">
+                    <input type="hidden" name="building" value="house">
+                    <button type="submit" {% if session.game_over %}disabled{% endif %}>Find Gold!</button>
+                </form>
+            </div>
+
+            <div class="location-card casino">
+                <h3>Casino</h3>
+                <p>(earns/takes 0-50 golds)</p>
+                <form action="/process_money" method="post">
+                    <input type="hidden" name="building" value="casino">
+                    <button type="submit" {% if session.game_over %}disabled{% endif %}>Find Gold!</button>
+                </form>
+            </div>
+        </main>
+
+        <section class="activities">
+            <h2>Activities Log</h2>
+            <div class="log-container">
+                {% if session.activities %}
+                    {% for activity in session.activities %}
+                        <p class="{{ activity.color }}">{{ activity.message }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p class="placeholder">Your adventure begins here...</p>
+                {% endif %}
+            </div>
+        </section>
+        
+        <footer class="footer-actions">
+            <form action="/process_money" method="post">
+                <input type="hidden" name="building" value="reset">
+                <button type="submit" class="reset-link-btn">Reset Game</button>
+            </form>
+        </footer>
+    </div>
+</body>
+</html>
