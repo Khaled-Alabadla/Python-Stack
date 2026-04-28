@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dojo Survey</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center mt-3">Dojo Survey</h1>
+    <h4>Name: {{ session.name }}</h4>
+    <h4>Location: {{ session.location }}</h4>
+    <!-- Display all selected languages as a list -->
+    <h4>Favorite Languages:</h4>
+    <ul>
+      {% for lang in session.languages %}
+      <!-- Loop through each selected language -->
+      <li>{{ lang }}</li>
+      {% endfor %}
+    </ul>
+    <h4>Comment: {{ session.comment }}</h4>
+  </div>
+</body>
+
+</html>
