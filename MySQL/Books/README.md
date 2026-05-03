@@ -2,40 +2,6 @@
 
 This project defines a MySQL database structure for tracking users, books, and the "favorite" relationships between them.
 
-## Entity Relationship Diagram (ERD)
-
-![ERD Diagram](file:///C:/Users/Future/.gemini/antigravity/brain/251e649b-f526-4efa-8967-b74edfa4d96d/books_erd_diagram_1777833188664.png)
-
-### Mermaid Representation
-
-```mermaid
-erDiagram
-    USERS ||--o{ FAVORITES : marks
-    BOOKS ||--o{ FAVORITES : favorited_by
-
-    USERS {
-        int id PK
-        varchar first_name
-        varchar last_name
-        varchar email
-        datetime created_at
-        datetime updated_at
-    }
-
-    BOOKS {
-        int id PK
-        varchar title
-        varchar author
-        datetime created_at
-        datetime updated_at
-    }
-
-    FAVORITES {
-        int user_id PK, FK
-        int book_id PK, FK
-    }
-```
-
 ## Tables and Relationships
 
 ### 1. `users`
