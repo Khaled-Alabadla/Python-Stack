@@ -10,7 +10,7 @@ Stores information about the application users
 
 - `id`: Primary key
 - `first_name` & `last_name`
-- `email`.
+- `email`
 - `created_at`/`updated_at`
 
 ### 2. `books`
