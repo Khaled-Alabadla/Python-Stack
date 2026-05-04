@@ -70,8 +70,10 @@ Stores user activity
 
 - **users** and **blogs** (Many-to-Many via `blog_admins`): A user can be an administrator for multiple blogs, and a blog can have multiple administrators
 - **blogs** and **posts** (One-to-Many): Each blog can have many posts, but each post belongs to a single blog
-- **users** and **posts** (One-to-Many): A user can author multiple posts
+- **users** and **posts** (One-to-Many): A user can author multiple posts and the post is for a single user
 - **posts** and **comments** (One-to-Many): Each post can have multiple comments, but each comment belongs to a single post
 - **users** and **comments** (One-to-Many): A user can leave many comments
 - **posts** and **files** (One-to-Many): Each post can have multiple file uploads, but each file belongs to a single post
 - **users** and **page_views** (One-to-Many): A user's activity on the platform generates multiple page view records
+
+![Entity-Relationship Diagram](Blogs_ERD.png)
