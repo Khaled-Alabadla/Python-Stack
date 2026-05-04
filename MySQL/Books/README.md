@@ -30,3 +30,37 @@ Handles the **Many-to-Many** relationship between `users` and `books`
 - A book can be favorited by many users
 - `user_id`: Foreign key referencing `users(id)`
 - `book_id`: Foreign key referencing `books(id)`
+
+## Relationships
+
+### Foreign Keys
+
+| Table       | Column    | References  | Type        |
+| ----------- | --------- | ----------- | ----------- |
+| `favorites` | `user_id` | `users(id)` | One-to-Many |
+| `favorites` | `book_id` | `books(id)` | One-to-Many |
+
+### Relationship Diagram
+
+```
+users (1) ──────────< (Many) favorites (Many) ──────────> (1) books
+                           |
+                    - user_id (FK)
+                    - book_id (FK)
+```
+
+### Relationship Descriptions
+
+1. **users → favorites** (One-to-Many)
+   - One user can have many favorite books
+   - Each record in `favorites` references exactly one user via `user_id`
+
+2. **books → favorites** (One-to-Many)
+   - One book can be favorited by many users
+   - Each record in `favorites` references exactly one book via `book_id`
+
+3. **users ↔ books** (Many-to-Many through `favorites`)
+   - The `favorites` table acts as a join table connecting users and books
+   - Allows for flexible tracking of user preferences
+
+![Entity-Relationship Diagram](Book_ERD.png)
