@@ -29,3 +29,9 @@ Stores comments left on posts
 - `content`: The text of the comment
 - `user_id`: Foreign Key linking to the commenter
 - `post_id`: Foreign Key linking to the parent post
+
+## Relationships
+
+- `users` to `posts`: One user can author many posts and the post belongs to one user (`users.id` → `posts.user_id`)
+- `users` to `comments`: One user can write many comments and the comment belongs to one user (`users.id` → `comments.user_id`)
+- `posts` to `comments`: One post can have many comments and the comment belongs to one post (`posts.id` → `comments.post_id`)
