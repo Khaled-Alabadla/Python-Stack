@@ -35,3 +35,5 @@ Stores comments left on posts
 - `users` to `posts`: One user can author many posts and the post belongs to one user (`users.id` → `posts.user_id`)
 - `users` to `comments`: One user can write many comments and the comment belongs to one user (`users.id` → `comments.user_id`)
 - `posts` to `comments`: One post can have many comments and the comment belongs to one post (`posts.id` → `comments.post_id`)
+
+![Entity-Relationship Diagram](Simple_Blog_ERD.png)
