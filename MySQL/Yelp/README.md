@@ -1,6 +1,6 @@
 # Yelp ERD
 
-This project focuses on designing the database schema for a Yelp-like application based on a provided wireframe.
+This project focuses on designing the database schema for a Yelp application based on a provided wireframe.
 
 ## Schema Details
 
@@ -37,6 +37,8 @@ This table acts as a bridge (join) between users and restaurants, representing a
 
 ## Relationships
 
-- **Users to Reviews**: One-to-Many (A user can write multiple reviews).
-- **Restaurants to Reviews**: One-to-Many (A restaurant can have multiple reviews).
-- **Users to Restaurants**: Many-to-Many (Linked via the `reviews` table).
+- **Users to Reviews**: One-to-Many (A user can write multiple reviews and the review belongs to a single user)
+- **Restaurants to Reviews**: One-to-Many (A restaurant can have multiple reviews and the review belongs to a single restaurant)
+- **Users to Restaurants**: Many-to-Many (Linked via the `reviews` table)
+
+![Entity-Relationship Diagram](Yelp_ERD.png)
