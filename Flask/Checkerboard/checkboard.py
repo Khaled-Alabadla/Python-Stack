@@ -5,9 +5,9 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 # Route for default checkerboard (8x8, black and white)
-@app.route('/')
-def checkboard():
-  return render_template('index.html', x = 8, y = 8, color1='black', color2='white')
+@app.route('/', defaults={'x': 8, 'y': 8, 'color1': 'black', 'color2': 'white'})
+def checkboard(x, y, color1, color2):
+  return render_template('index.html', x=x, y=y, color1=color1, color2=color2)
 
 # Route for custom width, default height and colors
 @app.route('/<x>')
