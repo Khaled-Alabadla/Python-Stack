@@ -8,6 +8,7 @@ FROM countries
 JOIN languages
 ON countries.id =languages.country_id
 WHERE languages.language = "Slovene"
+ORDER BY languages.percentage DESC
 
 2. What query would you run to display each country's total number of cities?
 Your query should return the name of the country and the total number of cities.
@@ -41,6 +42,7 @@ FROM countries
 JOIN languages
 ON countries.id = languages.country_id
 WHERE languages.percentage > 89
+ORDER BY languages.percentage DESC;
 
 5. What query would you run to get all the countries with a Surface Area below 501
 and a Population greater than 100,000? 
@@ -58,6 +60,7 @@ SELECT countries.name, countries.government_form, countries.capital
 FROM countries
 WHERE countries.government_form = "Constitutional Monarchy"
 AND countries.capital > 200
+AND countries.life_expectancy > 75;
 
 7. What query would you run to get all the cities of Argentina inside the Buenos Aires district
 and have a population greater than 500,000? The query should return the Country Name, City Name, District, and Population.
@@ -69,6 +72,7 @@ Solution:
  ON countries.id = cities.country_id
  WHERE countries.name = "Argentina"
  AND cities.district = "Buenos Aires"
+ AND cities.population > 500000;
 
 8. What query would you run to summarize the number of countries in each region?
 The query should display the region's name and the number of countries.
