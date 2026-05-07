@@ -1,6 +1,6 @@
 # Sakila Database Queries
 
-This repository contains SQL queries for the Sakila sample database, a MySQL database that models a DVD rental store.
+This repository contains SQL queries for the Sakila sample database.
 
 ## Contents
 
