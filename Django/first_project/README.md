@@ -1,36 +1,27 @@
 # first_project
 
-Simple Django project with a single app `my_app`.
+Django project with three reusable apps: `blogs`, `surveys`, and `users`.
 
-Routes (defined in `my_app/urls.py`):
+## Routes
 
-- `/` -> redirects to `/blogs/` (view: `root`)
-- `/blogs/` -> list placeholder (view: `index`)
-- `/blogs/new` -> new form placeholder (view: `new`)
-- `/blogs/create` -> redirects to `/` (view: `create`)
-- `/blogs/json` -> returns JSON with `title` and `content` (view: `json_view`)
-- `/blogs/<number>/` -> show placeholder (view: `show`)
-- `/blogs/<number>/edit` -> edit placeholder (view: `edit`)
-- `/blogs/<number>/delete` -> redirects to `/blogs/` (view: `destroy`)
+### Blogs App (defined in `blogs/urls.py`)
 
-Run the development server:
+- `/blogs` -> list all blogs (view: `index`)
+- `/blogs/new` -> new blog form (view: `new`)
+- `/blogs/create` -> create blog, redirects to `/blogs` (view: `create`)
+- `/blogs/<number>` -> show specific blog (view: `show`)
+- `/blogs/<number>/edit` -> edit blog form (view: `edit`)
+- `/blogs/<number>/delete` -> delete blog, redirects to `/blogs` (view: `destroy`)
 
-1. Create and activate a virtual environment (optional but recommended):
-   - Windows PowerShell:
-     ```powershell
-     python -m venv env_name;
-     ```
+### Surveys App (defined in `surveys/urls.py`)
 
-2. Install dependencies (if not already installed):
+- `/surveys` -> list all surveys (view: `index`)
+- `/surveys/new` -> new survey form (view: `new`)
 
-   ```powershell
-   python -m pip install django
-   ```
+### Users App (defined in `users/urls.py`)
 
-3. Run the server:
-
-   ```powershell
-   python manage.py runserver
-   ```
-
-Then open http://localhost:8000/ in your browser.
+- `/` -> redirects to `/blogs` (view: `index_root`)
+- `/register` -> user registration form (view: `register`)
+- `/login` -> user login form (view: `login`)
+- `/users/new` -> alias for `/register` (view: `register`)
+- `/users` -> list all users (view: `index`)
