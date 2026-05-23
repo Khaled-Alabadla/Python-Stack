@@ -1,4 +1,4 @@
-# Ninja Gold Game - Django Edition
+# Ninja Gold Game - Django
 
 A fun web-based game where a ninja can earn gold by visiting different locations!
 
