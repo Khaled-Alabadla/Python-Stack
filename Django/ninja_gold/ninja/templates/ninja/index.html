@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Ninja Gold Game</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+      }
+      
+      .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        background-color: white;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      
+      .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 20px;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+      
+      .header h1 {
+        font-size: 36px;
+      }
+      
+      .stats {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+      }
+      
+      .stat-box {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 2px solid #333;
+        text-align: center;
+        font-weight: bold;
+      }
+      
+      .gold-display {
+        font-size: 20px;
+        background-color: #ffd700;
+        border: 2px solid #daa520;
+      }
+      
+      .moves-display {
+        font-size: 16px;
+        background-color: #87ceeb;
+        border: 2px solid #4682b4;
+      }
+      
+      .goals-display {
+        font-size: 14px;
+        background-color: #dda0dd;
+        border: 2px solid #8b008b;
+      }
+      
+      .game-over-message {
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        font-size: 18px;
+        font-weight: bold;
+        text-align: center;
+        border: 2px solid;
+      }
+      
+      .win {
+        background-color: #d4edda;
+        color: #155724;
+        border-color: #28a745;
+      }
+      
+      .lose {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-color: #dc3545;
+      }
+      
+      .activities-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      
+      .activity-card {
+        border: 2px solid #333;
+        border-radius: 5px;
+        padding: 20px;
+        text-align: center;
+        background-color: #f9f9f9;
+        transition: all 0.3s;
+      }
+      
+      .activity-card:hover {
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+      }
+      
+      .activity-card.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      
+      .activity-card h3 {
+        margin-bottom: 10px;
+        font-size: 22px;
+      }
+      
+      .activity-card p {
+        margin-bottom: 15px;
+        color: #666;
+        font-size: 14px;
+      }
+      
+      .activity-card a {
+        display: inline-block;
+        background-color: #4caf50;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+      }
+      
+      .activity-card a:hover {
+        background-color: #45a049;
+      }
+      
+      .activities-log-title {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        border-bottom: 2px solid #333;
+        padding-bottom: 10px;
+      }
+      
+      .activities-log {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 20px;
+      }
+      
+      .activity-item {
+        padding: 10px;
+        margin-bottom: 8px;
+        border-radius: 3px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      
+      .activity-item.positive {
+        background-color: #d4edda;
+        color: #155724;
+        border-left: 4px solid #28a745;
+      }
+      
+      .activity-item.negative {
+        background-color: #f8d7da;
+        color: #721c24;
+        border-left: 4px solid #dc3545;
+      }
+      
+      .empty-activities {
+        text-align: center;
+        color: #999;
+        padding: 20px;
+      }
+      
+      .reset-button {
+        display: inline-block;
+        background-color: #dc3545;
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        text-align: center;
+      }
+      
+      .reset-button:hover {
+        background-color: #c82333;
+      }
+      
+      @media (max-width: 768px) {
+        .activities-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+      
+      @media (max-width: 480px) {
+        .activities-grid {
+          grid-template-columns: 1fr;
+        }
+      
+        .stats {
+          width: 100%;
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🥋 Ninja Gold Game</h1>
+        <div class="stats">
+          <div class="stat-box gold-display">Gold: {{ gold }}</div>
+          <div class="stat-box moves-display">Moves: {{ moves }}/{{ max_moves }}</div>
+          <div class="stat-box goals-display">Goal: {{ goal_gold }} gold</div>
+        </div>
+      </div>
+
+      {% if game_over %}
+        <div class="game-over-message {% if win %}
+            win
+          {% else %}
+            lose
+          {% endif %}">{{ message }}</div>
+      {% endif %}
+
+      <div class="activities-grid {% if game_over %}disabled{% endif %}">
+        <!-- Farm -->
+        <div class="activity-card {% if game_over %}disabled{% endif %}">
+          <h3>Farm</h3>
+          <p>(earns 10-20 gold)</p>
+          {% if not game_over %}
+            <a href="{% url 'ninja:process_money' 'farm' %}">Find Gold!</a>
+          {% else %}
+            <p style="color: #999;">Game Over</p>
+          {% endif %}
+        </div>
+
+        <!-- Cave -->
+        <div class="activity-card {% if game_over %}disabled{% endif %}">
+          <h3>Cave</h3>
+          <p>(earns 10-20 gold)</p>
+          {% if not game_over %}
+            <a href="{% url 'ninja:process_money' 'cave' %}">Find Gold!</a>
+          {% else %}
+            <p style="color: #999;">Game Over</p>
+          {% endif %}
+        </div>
+
+        <!-- House -->
+        <div class="activity-card {% if game_over %}disabled{% endif %}">
+          <h3>House</h3>
+          <p>(earns 10-20 gold)</p>
+          {% if not game_over %}
+            <a href="{% url 'ninja:process_money' 'house' %}">Find Gold!</a>
+          {% else %}
+            <p style="color: #999;">Game Over</p>
+          {% endif %}
+        </div>
+
+        <!-- Quest -->
+        <div class="activity-card {% if game_over %}disabled{% endif %}">
+          <h3>Quest</h3>
+          <p>(earns/takes 0-50 gold)</p>
+          {% if not game_over %}
+            <a href="{% url 'ninja:process_money' 'quest' %}">Find Gold!</a>
+          {% else %}
+            <p style="color: #999;">Game Over</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="activities-log-title">Activities:</div>
+      <div class="activities-log">
+        {% if activities %}
+          {% for activity in activities %}
+            <div class="activity-item {% if activity.gold_amount > 0 %}
+                positive
+              {% else %}
+                negative
+              {% endif %}">{{ activity.message }} ({{ activity.timestamp }})</div>
+          {% endfor %}
+        {% else %}
+          <div class="empty-activities">No activities yet. Start by clicking on a location!</div>
+        {% endif %}
+      </div>
+
+      {% if game_over %}
+        <a href="{% url 'ninja:reset' %}" class="reset-button">Play Again</a>
+      {% endif %}
+    </div>
+  </body>
+</html>
