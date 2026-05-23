@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Great Number Game</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f4f4;
+        color: #333;
+        margin: 0;
+        padding: 0;
+      }
+      .page {
+        max-width: 620px;
+        margin: 0 auto;
+        padding: 32px 24px;
+        text-align: center;
+      }
+      h1 {
+        margin-bottom: 0.25em;
+      }
+      p.lead {
+        margin-top: 0;
+        margin-bottom: 1.75em;
+        color: #555;
+      }
+      .result-box {
+        width: 100%;
+        max-width: 360px;
+        margin: 0 auto 24px auto;
+        padding: 32px 24px;
+        border-radius: 12px;
+        color: white;
+        font-size: 1.3rem;
+        font-weight: bold;
+      }
+      .result-box.info {
+        background: #64748b;
+      }
+      .result-box.low {
+        background: #e3342f;
+      }
+      .result-box.high {
+        background: #e3342f;
+      }
+      .result-box.win {
+        background: #22c55e;
+      }
+      .result-box.lose {
+        background: #6b7280;
+      }
+      form {
+        display: grid;
+        gap: 12px;
+        justify-items: center;
+      }
+      input[type='text'] {
+        width: 180px;
+        padding: 10px 12px;
+        border-radius: 6px;
+        border: 1px solid #bbb;
+        font-size: 1rem;
+      }
+      button,
+      .play-again {
+        padding: 10px 20px;
+        border: none;
+        border-radius: 6px;
+        background: #111827;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+      button:hover,
+      .play-again:hover {
+        background: #374151;
+      }
+      .meta {
+        color: #4b5563;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <h1>Welcome to the Great Number Game!</h1>
+      <p class="lead">I am thinking of a number between 1 and 100. Take a guess!</p>
+
+      <div class="result-box {{ result_type }}">
+        {% if result %}
+          {{ result }}
+        {% else %}
+          Submit a guess and I'll tell you.
+        {% endif %}
+      </div>
+
+      {% if game_over %}
+        <form method="post">
+          {% csrf_token %}
+          <button type="submit" name="reset" value="1">Play again</button>
+        </form>
+      {% else %}
+        <form method="post">
+          {% csrf_token %}
+          <input type="text" name="guess" placeholder="Enter your guess" autocomplete="off" autofocus />
+          <button type="submit">Submit</button>
+        </form>
+      {% endif %}
+
+      <div class="meta">Attempts: {{ attempts }} / 5</div>
+    </div>
+  </body>
+</html>
