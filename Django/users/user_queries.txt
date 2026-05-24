@@ -1,0 +1,30 @@
+# Django shell queries for User model
+from user_app.models import User
+
+# Create 3 new users
+User.objects.create(first_name='Bilal', last_name='Qanoa', email_address='bilal@example.com', age=24)
+User.objects.create(first_name='Ahmed', last_name='Abohabel', email_address='abohabel@example.com', age=26)
+User.objects.create(first_name='Mohmoud', last_name='Shalayel', email_address='shalayel@example.com', age=23)
+
+# Retrieve all the users
+User.objects.all()
+
+# Retrieve the last user
+User.objects.last()
+
+# Retrieve the first user
+User.objects.first()
+
+# Change the user with id=3 so their last name is Pancakes
+user = User.objects.get(id=3)
+user.last_name = 'Ahmed'
+user.save()
+
+# Delete the user with id=2 from the database
+User.objects.get(id=2).delete()
+
+# Get all the users, sorted by their first name
+User.objects.order_by('first_name')
+
+# BONUS: Get all the users, sorted by their first name in descending order
+User.objects.order_by('-first_name')
