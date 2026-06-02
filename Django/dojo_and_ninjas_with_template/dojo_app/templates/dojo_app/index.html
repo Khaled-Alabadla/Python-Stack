@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dojo and Ninjas</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 2rem;
+        color: #111;
+      }
+      .panel {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+      }
+      .card {
+        border: 2px solid #111;
+        padding: 1.5rem;
+        width: 320px;
+      }
+      .card h2 {
+        margin-top: 0;
+      }
+      label {
+        display: block;
+        margin: 0.75rem 0 0.25rem;
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 2px solid #111;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.5rem 1rem;
+        border: 2px solid #111;
+        background: #fff;
+        cursor: pointer;
+        font-weight: bold;
+      }
+      .dojo-block {
+        border-bottom: 1px solid #ddd;
+        padding: 1rem 0;
+      }
+      .dojo-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 1rem;
+      }
+      .dojo-header h3 {
+        margin: 0 0 0.25rem;
+      }
+      .dojo-info {
+        margin: 0.5rem 0 0;
+      }
+      ul {
+        margin: 0.75rem 0 0 1rem;
+        padding: 0;
+      }
+      li {
+        margin-bottom: 0.35rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 style="text-align:center;">Dojo and Ninja Dashboard</h1>
+
+    <div class="panel">
+      <div class="card">
+        <h2>Add a Dojo</h2>
+        <form method="post" action="{% url 'create_dojo' %}">
+          {% csrf_token %}
+          <label for="name">Name:</label>
+          <input id="name" name="name" required />
+          <label for="city">City:</label>
+          <input id="city" name="city" required />
+          <label for="state">State:</label>
+          <input id="state" name="state" maxlength="2" required />
+          <button type="submit">Add</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Add a Ninja</h2>
+        <form method="post" action="{% url 'create_ninja' %}">
+          {% csrf_token %}
+          <label for="first_name">First Name:</label>
+          <input id="first_name" name="first_name" required />
+          <label for="last_name">Last Name:</label>
+          <input id="last_name" name="last_name" required />
+          <label for="dojo">Dojo:</label>
+          <select id="dojo" name="dojo" required>
+            <option value="">Select a dojo</option>
+            {% for dojo in dojos %}
+              <option value="{{ dojo.id }}">{{ dojo.name }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit">Add</button>
+        </form>
+      </div>
+    </div>
+
+    <h2 style="text-align:center; margin-top: 3rem;">All the Dojos</h2>
+
+    <div>
+      {% if dojos %}
+        {% for dojo in dojos %}
+          <div class="dojo-block">
+            <div class="dojo-header">
+              <div>
+                <h3>{{ dojo.name }}</h3>
+                <p class="dojo-info">Ninjas at {{ dojo.name }} - {{ dojo.ninjas.count }}</p>
+              </div>
+              <form method="post" action="{% url 'delete_dojo' dojo.id %}">
+                {% csrf_token %}
+                <button type="submit">Delete Dojo</button>
+              </form>
+            </div>
+            <p>{{ dojo.city }}, {{ dojo.state }}</p>
+            {% if dojo.ninjas.all %}
+              <ul>
+                {% for ninja in dojo.ninjas.all %}
+                  <li>{{ ninja.first_name }} {{ ninja.last_name }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <p>
+                <em>No ninjas yet</em>
+              </p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p>No dojos have been added yet.</p>
+      {% endif %}
+    </div>
+  </body>
+</html>

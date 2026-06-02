@@ -1,0 +1,41 @@
+from dojo_app.models import Dojo, Ninja
+
+# Create 3 new dojos
+Dojo.objects.create(name='Dojo One', city='Al-Quds', state='PAL')
+Dojo.objects.create(name='Dojo Two', city='Ramallah', state='PAL')
+Dojo.objects.create(name='Dojo Three', city='Gaza', state='WB')
+
+# Delete the 3 dojos you just created
+Dojo.objects.filter(name__in=['Dojo One', 'Dojo Two', 'Dojo Three']).delete()
+
+# Create 3 more dojos
+dojo1 = Dojo.objects.create(name='Dojo 1', city='Al-Quds', state='WB')
+dojo2 = Dojo.objects.create(name='Dojo 2', city='Ramallah', state='WB')
+dojo3 = Dojo.objects.create(name='Dojo 3', city='Gaza', state='GS')
+
+# Create 3 ninjas that belong to the first dojo
+Ninja.objects.create(first_name='Nin11', last_name='ja11', dojo=dojo1)
+Ninja.objects.create(first_name='Nin12', last_name='ja12', dojo=dojo1)
+Ninja.objects.create(first_name='Nin13', last_name='ja13', dojo=dojo1)
+
+# Create 3 ninjas that belong to the second dojo
+Ninja.objects.create(first_name='Nin21', last_name='ja21', dojo=dojo2)
+Ninja.objects.create(first_name='Nin22', last_name='ja22', dojo=dojo2)
+Ninja.objects.create(first_name='Nin23', last_name='ja23', dojo=dojo2)
+
+# Create 3 ninjas that belong to the third dojo
+Ninja.objects.create(first_name='Nin31', last_name='ja31', dojo=dojo3)
+Ninja.objects.create(first_name='Nin32', last_name='ja32', dojo=dojo3)
+Ninja.objects.create(first_name='Nin33', last_name='ja33', dojo=dojo3)
+
+# Retrieve all the ninjas from the first dojo
+dojo1.ninjas.all()
+
+# Retrieve all the ninjas from the last dojo
+dojo3.ninjas.all()
+
+# Retrieve the last ninja's dojo
+Ninja.objects.last().dojo
+
+# Create a new dojo after adding the desc field
+Dojo.objects.create(name='New Dojo', city='Hebron', state='WB', desc='New dojo created after migration')
