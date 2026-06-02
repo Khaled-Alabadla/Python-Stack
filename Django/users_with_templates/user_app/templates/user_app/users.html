@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Users</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 32px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 24px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background: #f4f4f4;
+      }
+      form > div {
+        margin-bottom: 8px;
+      }
+      label {
+        display: inline-block;
+        width: 110px;
+      }
+      input[type='text'],
+      input[type='number'] {
+        width: 250px;
+        padding: 6px;
+      }
+      input[type='submit'] {
+        padding: 8px 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Users</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First name</th>
+          <th>Last name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in users %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.email_address }}</td>
+            <td>{{ user.age }}</td>
+            <td>{{ user.created_at }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="6">No users yet.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h2>Add user</h2>
+    <form method="post" action="{% url 'user_app:create' %}">
+      {% csrf_token %}
+      <div>
+        <label for="first_name">First name</label>
+        <input id="first_name" name="first_name" type="text" required />
+      </div>
+      <div>
+        <label for="last_name">Last name</label>
+        <input id="last_name" name="last_name" type="text" required />
+      </div>
+      <div>
+        <label for="email_address">Email</label>
+        <input id="email_address" name="email_address" type="text" required />
+      </div>
+      <div>
+        <label for="age">Age</label>
+        <input id="age" name="age" type="number" min="0" />
+      </div>
+      <div>
+        <input type="submit" value="Add user" />
+      </div>
+    </form>
+  </body>
+</html>
