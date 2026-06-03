@@ -29,4 +29,4 @@ def create_user(request):
 			age=age_val,
 		)
 
-	return redirect(reverse('user_app:index'))
+	return redirect('/')
