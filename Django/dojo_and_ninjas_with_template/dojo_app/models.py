@@ -10,7 +10,7 @@ class Dojo(models.Model):
 
     def __str__(self):
         return f'{self.name} - {self.state}'
-
+    
 class Ninja(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)

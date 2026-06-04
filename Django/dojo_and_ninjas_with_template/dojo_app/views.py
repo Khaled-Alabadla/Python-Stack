@@ -13,7 +13,7 @@ def index(request):
 
 def create_dojo(request):
     if request.method == 'POST':
-        name = request.POST.get('name', '').strip()
+        name = request.POST.get('name', '').strip() 
         city = request.POST.get('city', '').strip()
         state = request.POST.get('state', '').strip().upper()
         if name and city and state:
