@@ -1,0 +1,47 @@
+{% extends 'books_authors_app/base.html' %}
+{% block title %}
+  Books
+{% endblock %}
+{% block content %}
+  <h1>Add a Book</h1>
+  <form method="post" action="{% url 'books_authors_app:books' %}">
+    {% csrf_token %}
+    <div class="form-row">
+      <label for="title">Title</label>
+      <input id="title" name="title" type="text" required />
+    </div>
+    <div class="form-row">
+      <label for="desc">Description</label>
+      <input id="desc" name="desc" type="text" />
+    </div>
+    <button type="submit">Add</button>
+  </form>
+
+  <h2 class="summary">All Books</h2>
+  {% if books %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for book in books %}
+          <tr>
+            <td>{{ book.id }}</td>
+            <td>{{ book.title }}</td>
+            <td>{{ book.desc }}</td>
+            <td>
+              <a href="{% url 'books_authors_app:book_detail' book.id %}">View</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No books have been created yet.</p>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'books_authors_app/base.html' %}
+{% block title %}
+  Authors
+{% endblock %}
+{% block content %}
+  <h1>Add an Author</h1>
+  <form method="post" action="{% url 'books_authors_app:authors' %}">
+    {% csrf_token %}
+    <div class="form-row">
+      <label for="first_name">First Name</label>
+      <input id="first_name" name="first_name" type="text" required />
+    </div>
+    <div class="form-row">
+      <label for="last_name">Last Name</label>
+      <input id="last_name" name="last_name" type="text" required />
+    </div>
+    <div class="form-row">
+      <label for="notes">Notes</label>
+      <textarea id="notes" name="notes" rows="4"></textarea>
+    </div>
+    <button type="submit">Add</button>
+  </form>
+
+  <h2 class="summary">All Authors</h2>
+  {% if authors %}
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Notes</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for author in authors %}
+          <tr>
+            <td>{{ author.id }}</td>
+            <td>{{ author.first_name }} {{ author.last_name }}</td>
+            <td>{{ author.notes }}</td>
+            <td>
+              <a href="{% url 'books_authors_app:author_detail' author.id %}">View</a>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p>No authors have been created yet.</p>
+  {% endif %}
+{% endblock %}

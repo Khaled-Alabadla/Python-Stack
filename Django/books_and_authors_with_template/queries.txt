@@ -1,0 +1,61 @@
+from books_authors_app.models import Book, Author
+
+# Create 5 books
+Book.objects.create(title='C Sharp')
+Book.objects.create(title='Java')
+Book.objects.create(title='Python')
+Book.objects.create(title='PHP')
+Book.objects.create(title='Ruby')
+
+# Create 5 authors
+Author.objects.create(first_name='Shatha', last_name='Bast')
+Author.objects.create(first_name='Manar', last_name='Ismail')
+Author.objects.create(first_name='Bilal', last_name='Qanoa')
+Author.objects.create(first_name='Mahmoud', last_name='Shalayel')
+Author.objects.create(first_name='Mahmoud', last_name='Miqdad')
+
+# Update book title
+book_cs = Book.objects.get(title='C Sharp')
+book_cs.title = 'C#'
+book_cs.save()
+
+# Update author first name
+author_4 = Author.objects.get(id=4)
+author_4.first_name = 'Mahmood'
+author_4.save()
+
+# Assign authors to books
+author_1 = Author.objects.get(id=1)
+author_2 = Author.objects.get(id=2)
+author_3 = Author.objects.get(id=3)
+author_4 = Author.objects.get(id=4)
+author_5 = Author.objects.get(id=5)
+
+book_1 = Book.objects.get(id=1)
+book_2 = Book.objects.get(id=2)
+book_3 = Book.objects.get(id=3)
+book_4 = Book.objects.get(id=4)
+book_5 = Book.objects.get(id=5)
+
+book_1.authors.add(author_1, author_2, author_3, author_4)
+book_2.authors.add(author_1, author_2, author_3, author_4)
+book_3.authors.add(author_2, author_3, author_4)
+book_4.authors.add(author_3, author_4)
+book_5.authors.add(author_4)
+
+# Retrieve authors for the 3rd book
+book_3.authors.all()
+
+# Remove the first author of the 3rd book
+first_author_of_book3 = book_3.authors.first()
+if first_author_of_book3:
+    book_3.authors.remove(first_author_of_book3)
+
+# Add the 5th author to the 2nd book
+book_2.authors.add(author_5)
+
+# Find all books for the 3rd author
+author_3.books.all()
+
+# Find all authors contributed to the 5th book
+book_5.authors.all()

@@ -1,0 +1,45 @@
+{% extends 'books_authors_app/base.html' %}
+{% block title %}
+  Author Details
+{% endblock %}
+{% block content %}
+  <h1>{{ author.first_name }} {{ author.last_name }}</h1>
+  <p>
+    <strong>ID:</strong> {{ author.id }}
+  </p>
+  <p>
+    <strong>Notes:</strong> {{ author.notes|default:'(no notes)' }}
+  </p>
+
+  <h2>Books</h2>
+  {% if author.books.all %}
+    <ul>
+      {% for book in author.books.all %}
+        <li>
+          <a href="{% url 'books_authors_app:book_detail' book.id %}">{{ book.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No books are assigned to this author yet.</p>
+  {% endif %}
+
+  <h2>Add a Book</h2>
+  {% if available_books %}
+    <form method="post" action="{% url 'books_authors_app:author_detail' author.id %}">
+      {% csrf_token %}
+      <div class="form-row">
+        <label for="book_id">Select book</label>
+        <select id="book_id" name="book_id" required>
+          <option value="" disabled selected>Choose book</option>
+          {% for book in available_books %}
+            <option value="{{ book.id }}">{{ book.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <button type="submit">Add</button>
+    </form>
+  {% else %}
+    <p>All available books are already assigned to this author.</p>
+  {% endif %}
+{% endblock %}

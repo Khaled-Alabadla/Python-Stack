@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      {% block title %}
+        Books & Authors
+      {% endblock %}
+    </title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 1.5rem;
+        background: #f9f9f9;
+      }
+      .page {
+        max-width: 960px;
+        margin: 0 auto;
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 6px;
+        box-shadow: 0 0 16px rgba(0, 0, 0, 0.08);
+      }
+      .navbar {
+        margin-bottom: 1rem;
+      }
+      .navbar a {
+        margin-right: 1rem;
+        color: #1a73e8;
+        text-decoration: none;
+      }
+      h1,
+      h2,
+      h3 {
+        margin-top: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 0.75rem;
+      }
+      th {
+        background: #f5f5f5;
+        text-align: left;
+      }
+      tr:nth-child(even) {
+        background: #fafafa;
+      }
+      .form-row {
+        margin-bottom: 1rem;
+      }
+      label {
+        display: block;
+        margin-bottom: 0.35rem;
+        font-weight: 600;
+      }
+      input[type='text'],
+      textarea,
+      select {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      button {
+        padding: 0.55rem 1rem;
+        border: 1px solid #333;
+        background: #fff;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      button:hover {
+        background: #f0f0f0;
+      }
+      .summary {
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="navbar">
+        <a href="{% url 'books_authors_app:books' %}">Books</a>
+        <a href="{% url 'books_authors_app:authors' %}">Authors</a>
+      </div>
+      {% block content %}
+
+      {% endblock %}
+    </div>
+  </body>
+</html>
