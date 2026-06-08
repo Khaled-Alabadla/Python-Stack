@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Edit Show {{ show.id }}</title>
+  </head>
+  <body>
+    <h1>Edit Show {{ show.id }}</h1>
+    <p>
+      <a href="/shows/{{ show.id }}/">Go to Show</a> | <a href="/shows/">Go Back</a>
+    </p>
+    {% if messages %}
+      <ul style="color: red;">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form action="/shows/{{ show.id }}/update" method="post">
+      {% csrf_token %}
+      <p>
+        <label>
+          Title:<br />
+          <input type="text" name="title" value="{{ show.title }}" required />
+        </label>
+      </p>
+      <p>
+        <label>
+          Network:<br />
+          <input type="text" name="network" value="{{ show.network }}" />
+        </label>
+      </p>
+      <p>
+        <label>
+          Release Date:<br />
+          <input type="date" name="release_date" value="{{ formatted_date }}" />
+        </label>
+      </p>
+      <p>
+        <label>
+          Description:<br />
+          <textarea name="description" rows="4" cols="40">{{ show.description }}</textarea>
+        </label>
+      </p>
+      <p>
+        <button type="submit">Update</button>
+      </p>
+    </form>
+  </body>
+</html>

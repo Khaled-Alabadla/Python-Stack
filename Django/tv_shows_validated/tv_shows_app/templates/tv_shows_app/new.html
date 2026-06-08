@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Add a New Show</title>
+  </head>
+  <body>
+    <h1>Add a New Show</h1>
+    <p>
+      <a href="/shows/">Go Back</a>
+    </p>
+    {% if messages %}
+      <ul style="color: red;">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <form action="/shows/create" method="post">
+      {% csrf_token %}
+      <p>
+        <label>
+          Title:<br />
+          <input type="text" name="title" required />
+        </label>
+      </p>
+      <p>
+        <label>
+          Network:<br />
+          <input type="text" name="network" />
+        </label>
+      </p>
+      <p>
+        <label>
+          Release Date:<br />
+          <input type="date" name="release_date" />
+        </label>
+      </p>
+      <p>
+        <label>
+          Description:<br />
+          <textarea name="description" rows="4" cols="40"></textarea>
+        </label>
+      </p>
+      <p>
+        <button type="submit">Create</button>
+      </p>
+    </form>
+  </body>
+</html>
