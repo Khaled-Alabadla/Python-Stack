@@ -1,0 +1,12 @@
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.course_list, name='course_list'),
+    path('<int:pk>/', views.course_detail, name='course_detail'),
+    path('create/', views.create_course, name='create_course'),
+    path('delete/<int:pk>', views.delete_course, name='delete_course'),
+    path('comment/<int:pk>', views.add_comment, name='add_comment'),
+    path('comment/delete/<int:pk>', views.delete_comment, name='delete_comment'),
+]
+

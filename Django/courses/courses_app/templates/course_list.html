@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Catalogue</title>
+    <style>
+      body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: #f1f5f9;
+        color: #0f172a;
+      }
+      .page-shell {
+        max-width: 1080px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .header-card {
+        background: linear-gradient(135deg, #0284c7, #0ea5e9);
+        border-radius: 24px;
+        padding: 28px 32px;
+        color: white;
+        box-shadow: 0 24px 50px rgba(15, 23, 42, 0.12);
+        margin-bottom: 24px;
+      }
+      .header-card h1 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 3rem);
+      }
+      .header-card p {
+        margin: 10px 0 0;
+        color: #dbeafe;
+      }
+      .panel {
+        background: white;
+        padding: 24px;
+        border-radius: 24px;
+        box-shadow: 0 24px 60px rgba(15, 23, 42, 0.08);
+        margin-bottom: 24px;
+      }
+      .panel h2 {
+        margin-top: 0;
+        color: #0f172a;
+      }
+      .field {
+        display: grid;
+        gap: 10px;
+        margin-bottom: 18px;
+      }
+      label {
+        font-weight: 600;
+        color: #334155;
+      }
+      input,
+      textarea {
+        width: 100%;
+        border: 1px solid #cbd5e1;
+        border-radius: 16px;
+        padding: 14px 16px;
+        font-size: 1rem;
+        color: #0f172a;
+      }
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 14px 22px;
+        cursor: pointer;
+        transition: transform 0.2s ease, background-color 0.2s ease;
+      }
+      .btn:hover {
+        transform: translateY(-1px);
+        background: #1d4ed8;
+      }
+      .table-shell {
+        overflow-x: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 14px;
+      }
+      th,
+      td {
+        padding: 18px 14px;
+        border-bottom: 1px solid #e2e8f0;
+      }
+      th {
+        text-align: left;
+        color: #475569;
+      }
+      tbody tr:hover {
+        background: #f8fafc;
+      }
+      .link-button {
+        text-decoration: none;
+        color: #2563eb;
+        font-weight: 600;
+      }
+      .link-button:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <section class="header-card">
+        <h1>Course Management</h1>
+        <p>Create new courses, review your catalogue, and open a course details page to add comments.</p>
+      </section>
+
+      <section class="panel">
+        <h2>Create a Course</h2>
+        {% if errors %}
+          <div style="color:#b91c1c; margin-bottom:16px;">
+            <ul>
+              {% for field, message in errors.items %}
+                <li>{{ field }}: {{ message }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <form action="{% url 'create_course' %}" method="post">
+          {% csrf_token %}
+          <div class="field">
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" placeholder="Course name" required />
+          </div>
+          <div class="field">
+            <label for="description">Description</label>
+            <textarea id="description" name="description" placeholder="Course description" required></textarea>
+          </div>
+          <button class="btn" type="submit">Create Course</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <h2>Course List</h2>
+        <div class="table-shell">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for course in courses %}
+                <tr>
+                  <td>{{ course.name }}</td>
+                  <td>{{ course.coursedescription.description }}</td>
+                  <td>{{ course.date|date:'F j, Y' }}</td>
+                  <td>
+                    <a class="link-button" href="{% url 'add_comment' pk=course.pk %}">Comments</a>
+                    &nbsp;•&nbsp;
+                    <a class="link-button" href="{% url 'delete_course' pk=course.pk %}">Remove</a>
+                  </td>
+                </tr>
+              {% empty %}
+                <tr>
+                  <td colspan="4" style="padding: 24px; text-align: center; color: #64748b;">No courses available yet.</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
