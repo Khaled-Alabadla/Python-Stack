@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Welcome — SimpleAuth
+{% endblock %}
+
+{% block content %}
+  <h2 style="color: #fff">Welcome!</h2>
+  <p style="color: #fff">You have successfully registered and logged in.</p>
+
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="secondary">Logout</button>
+  </form>
+{% endblock %}
