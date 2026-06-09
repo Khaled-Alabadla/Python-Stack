@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Update Book
+{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <div>
+      <p class="user-greeting">Welcome, {{ user.username }}</p>
+      <h1 class="page-title">Update Book</h1>
+    </div>
+    <!-- logout moved to navbar -->
+  </div>
+
+  <div class="content-grid">
+    <div class="col-lg-8">
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title">Edit Book</h4>
+          <!-- Important: form field names must match the Book model fields -->
+          <form action="{% url 'books:update_book' book.pk %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" name="title" id="title" value="{{ book.title }}" required />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" name="description" id="description" rows="4">{{ book.description }}</textarea>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary" type="submit">Update</button>
+              <a href="{% url 'books:book_details' book.id %}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">All Books</h5>
+          <ul class="list-group list-group-flush">
+            {% for book in books %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'books:book_details' book.id %}">{{ book.title }}</a>
+                {% if book in user.liked_books.all %}
+                  <span class="badge bg-secondary">Favorite</span>
+                {% endif %}
+              </li>
+            {% empty %}
+              <li class="list-group-item">No books yet.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

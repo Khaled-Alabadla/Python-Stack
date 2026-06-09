@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Favorite Books — Create
+{% endblock %}
+
+{% block content %}
+  <div class="row align-items-start mb-3">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <p class="text-muted mb-0">Welcome, {{ user.username }}</p>
+          <h1 class="h2 mt-1">Discover & Add Favorites</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-lg-8">
+      <div class="card bg-transparent border-0">
+        <div class="card-body p-0">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="h5 mb-0">All Books</h2>
+            <span class="badge rounded-pill bg-light text-dark">{{ books|length }} total</span>
+          </div>
+
+          <div class="list-group">
+            {% for book in books %}
+              <div class="list-group-item list-group-item-action bg-transparent border-0 py-3">
+                <div class="d-flex w-100 justify-content-between" style="te">
+                  <h5 class="mb-1"><a class="link" style="color: black" href="{% url 'books:book_details' book.id %}">{{ book.title }}</a></h5>
+                  <small class="text-muted">{{ book.uploaded_by.username }}</small>
+                </div>
+                <div class="mt-2 d-flex gap-2">
+                  {% if book in user.liked_books.all %}
+                    <span class="badge bg-light text-dark">Favorite</span>
+                  {% else %}
+                    <form action="{% url 'books:add_to_favorite' book.id %}" method="POST">
+                      {% csrf_token %}
+                      <button class="btn btn-sm btn-outline-light" type="submit">Add</button>
+                    </form>
+                  {% endif %}
+                </div>
+              </div>
+            {% empty %}
+              <div class="alert alert-secondary">No books yet. Add one to get started.</div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Add a New Book</h5>
+          <!-- Important: fields map to the Book model -->
+          <form action="{% url 'books:create_book' %}" method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="title" class="form-label">Title</label>
+              <input type="text" class="form-control" name="title" id="title" required />
+            </div>
+            <div class="mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-primary" type="submit">Create</button>
+              <button class="btn btn-outline-secondary" type="reset">Reset</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
