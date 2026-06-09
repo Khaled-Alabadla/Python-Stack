@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Register — SimpleAuth
+{% endblock %}
+
+{% block content %}
+  <h2 style="color: #fff">Register</h2>
+
+  {% if messages %}
+    {% for message in messages %}
+      <p class="error">{{ message }}</p>
+    {% endfor %}
+  {% endif %}
+
+  <form action="{% url 'register' %}" method="post" id="registerForm" novalidate>
+    {% csrf_token %}
+    <div class="field">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" value="{{ old_data.username }}" autocomplete="username" />
+      <span id="username_error" class="error"></span>
+    </div>
+
+    <div class="field">
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" value="{{ old_data.email }}" autocomplete="email" />
+      <span id="email_error" class="error"></span>
+    </div>
+
+    <div class="field">
+      <label for="birthday">Birthday</label>
+      <input type="date" id="birthday" name="birthday" value="{{ old_data.birthday }}" />
+      <span id="birthday_error" class="error"></span>
+    </div>
+
+    <div class="field">
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" autocomplete="new-password" />
+      <span id="password_error" class="error"></span>
+    </div>
+
+    <div class="field">
+      <label for="confirm_password">Confirm Password</label>
+      <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password" />
+      <span id="confirm_password_error" class="error"></span>
+    </div>
+
+    <button type="submit">Create account</button>
+    <div class="actions">
+      <a class="muted-link" href="{% url 'login' %}">Already have an account?</a>
+    </div>
+  </form>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    const form = document.getElementById('registerForm')
+    const usernameField = document.getElementById('username')
+    const emailField = document.getElementById('email')
+    const birthdayField = document.getElementById('birthday')
+    const passwordField = document.getElementById('password')
+    const confirmPasswordField = document.getElementById('confirm_password')
+    
+    function setError(field, message) {
+      const errorElement = document.getElementById(`${field.id}_error`)
+      errorElement.textContent = message || ''
+    }
+    
+    function validateEmailFormat(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+    }
+    
+    function calculateAge(birthDate) {
+      const today = new Date()
+      const birth = new Date(birthDate)
+      let age = today.getFullYear() - birth.getFullYear()
+      const monthDiff = today.getMonth() - birth.getMonth()
+      const dayDiff = today.getDate() - birth.getDate()
+      if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+        age -= 1
+      }
+      return age
+    }
+    
+    async function checkEmailAvailable(email) {
+      if (!validateEmailFormat(email)) {
+        setError(emailField, 'Enter a valid email address.')
+        return false
+      }
+    
+      try {
+        const response = await fetch(`{% url 'check_email' %}?email=${encodeURIComponent(email)}`)
+        const data = await response.json()
+        if (data.exists) {
+          setError(emailField, 'Email is already registered.')
+          return false
+        }
+        setError(emailField, '')
+        return true
+      } catch (e) {
+        // If network check fails, allow server-side to handle uniqueness
+        return true
+      }
+    }
+    
+    async function validateForm() {
+      let valid = true
+    
+      if (usernameField.value.trim().length < 3) {
+        setError(usernameField, 'Username must be at least 3 characters long.')
+        valid = false
+      } else {
+        setError(usernameField, '')
+      }
+    
+      if (!emailField.value.trim() || !validateEmailFormat(emailField.value.trim())) {
+        setError(emailField, 'Enter a valid email address.')
+        valid = false
+      } else {
+        const emailAvailable = await checkEmailAvailable(emailField.value.trim())
+        if (!emailAvailable) valid = false
+      }
+    
+      if (!birthdayField.value) {
+        setError(birthdayField, 'Birthday is required.')
+        valid = false
+      } else {
+        const age = calculateAge(birthdayField.value)
+        if (age < 0) {
+          setError(birthdayField, 'Birthday cannot be in the future.')
+          valid = false
+        } else if (age < 13) {
+          setError(birthdayField, 'You must be at least 13 years old.')
+          valid = false
+        } else {
+          setError(birthdayField, '')
+        }
+      }
+    
+      if (passwordField.value.length < 8) {
+        setError(passwordField, 'Password must be at least 8 characters long.')
+        valid = false
+      } else {
+        setError(passwordField, '')
+      }
+    
+      if (confirmPasswordField.value !== passwordField.value) {
+        setError(confirmPasswordField, 'Passwords do not match.')
+        valid = false
+      } else {
+        setError(confirmPasswordField, '')
+      }
+    
+      return valid
+    }
+    
+    emailField.addEventListener('blur', () => {
+      if (emailField.value.trim()) {
+        checkEmailAvailable(emailField.value.trim())
+      }
+    })
+    
+    form.addEventListener('submit', async function (event) {
+      event.preventDefault()
+      const isValid = await validateForm()
+      if (isValid) {
+        form.submit()
+      }
+    })
+  </script>
+{% endblock %}
