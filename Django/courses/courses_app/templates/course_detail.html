@@ -152,13 +152,19 @@
         background: #f8fafc;
       }
       .comment-action {
-        color: #ef4444;
-        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: #ef4444;
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        font-weight: 700;
         cursor: pointer;
-        text-decoration: none;
       }
       .comment-action:hover {
-        color: #b91c1c;
+        background: #dc2626;
       }
       .modal {
         position: fixed;
@@ -261,9 +267,7 @@
                   <td>{{ comment.content }}</td>
                   <td>{{ comment.date|date:'F j, Y H:i' }}</td>
                   <td>
-                    <button type="button" class="comment-action delete-comment-button" data-delete-url="{% url 'delete_comment' pk=comment.pk %}" data-comment-id="{{ comment.pk }}">
-                      Remove
-                    </button>
+                    <button type="button" class="comment-action delete-comment-button" data-delete-url="{% url 'delete_comment' pk=comment.pk %}" data-comment-id="{{ comment.pk }}">Remove</button>
                   </td>
                 </tr>
               {% empty %}
@@ -289,73 +293,73 @@
     </div>
 
     <script>
-      const modal = document.getElementById('confirmModal');
-      const modalCancel = document.getElementById('modalCancel');
-      const modalConfirm = document.getElementById('modalConfirm');
-      let deleteUrl = null;
-      let activeRow = null;
-
+      const modal = document.getElementById('confirmModal')
+      const modalCancel = document.getElementById('modalCancel')
+      const modalConfirm = document.getElementById('modalConfirm')
+      let deleteUrl = null
+      let activeRow = null
+      
       function openModal(url, row) {
-        deleteUrl = url;
-        activeRow = row;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden', 'false');
+        deleteUrl = url
+        activeRow = row
+        modal.classList.add('open')
+        modal.setAttribute('aria-hidden', 'false')
       }
-
+      
       function closeModal() {
-        modal.classList.remove('open');
-        modal.setAttribute('aria-hidden', 'true');
-        deleteUrl = null;
-        activeRow = null;
+        modal.classList.remove('open')
+        modal.setAttribute('aria-hidden', 'true')
+        deleteUrl = null
+        activeRow = null
       }
-
+      
       function getCookie(name) {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-        return '';
+        const cookies = document.cookie.replace(/;\s*/g, '&')
+      
+        const searchParams = new URLSearchParams(cookies)
+        return searchParams.get(name) || ''
       }
-
-      document.querySelectorAll('.delete-comment-button').forEach(button => {
+      
+      document.querySelectorAll('.delete-comment-button').forEach((button) => {
         button.addEventListener('click', () => {
-          openModal(button.dataset.deleteUrl, document.getElementById(`comment-row-${button.dataset.commentId}`));
-        });
-      });
-
-      modalCancel.addEventListener('click', closeModal);
-
+          openModal(button.dataset.deleteUrl, document.getElementById(`comment-row-${button.dataset.commentId}`))
+        })
+      })
+      
+      modalCancel.addEventListener('click', closeModal)
+      
       modalConfirm.addEventListener('click', async () => {
         if (!deleteUrl || !activeRow) {
-          return;
+          return
         }
-        const token = getCookie('csrftoken');
+        const token = getCookie('csrftoken')
         try {
           const response = await fetch(deleteUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               'X-CSRFToken': token,
-              'X-Requested-With': 'XMLHttpRequest',
+              'X-Requested-With': 'XMLHttpRequest'
             },
-            body: JSON.stringify({}),
-          });
-          const result = await response.json();
+            body: JSON.stringify({})
+          })
+          const result = await response.json()
           if (response.ok && result.success) {
-            activeRow.remove();
-            closeModal();
+            activeRow.remove()
+            closeModal()
           } else {
-            throw new Error('Could not delete comment');
+            throw new Error('Could not delete comment')
           }
         } catch (error) {
-          alert('Unable to delete the comment. Please try again.');
+          alert('Unable to delete the comment. Please try again.')
         }
-      });
-
-      window.addEventListener('keydown', event => {
+      })
+      
+      window.addEventListener('keydown', (event) => {
         if (event.key === 'Escape' && modal.classList.contains('open')) {
-          closeModal();
+          closeModal()
         }
-      });
+      })
     </script>
   </body>
 </html>
