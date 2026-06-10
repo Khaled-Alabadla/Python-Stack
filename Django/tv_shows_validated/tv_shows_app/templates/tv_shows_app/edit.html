@@ -1,49 +1,50 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Edit Show {{ show.id }}</title>
-  </head>
-  <body>
-    <h1>Edit Show {{ show.id }}</h1>
-    <p>
-      <a href="/shows/{{ show.id }}/">Go to Show</a> | <a href="/shows/">Go Back</a>
-    </p>
+{% extends 'tv_shows_app/base.html' %}
+
+{% block title %}Edit — {{ show.title }}{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="/shows/{{ show.id }}/" class="text-indigo-600 hover:underline">← Back to show</a>
+    <span class="mx-2 text-gray-400">|</span>
+    <a href="/shows/" class="text-indigo-600 hover:underline">All shows</a>
+  </div>
+
+  <div class="bg-white shadow rounded p-6">
+    <h2 class="text-2xl font-semibold mb-4">Edit Show</h2>
+
     {% if messages %}
-      <ul style="color: red;">
+      <div class="mb-4">
         {% for message in messages %}
-          <li>{{ message }}</li>
+          <div class="text-sm text-red-600">{{ message }}</div>
         {% endfor %}
-      </ul>
+      </div>
     {% endif %}
-    <form action="/shows/{{ show.id }}/update" method="post">
+
+    <form action="/shows/{{ show.id }}/update" method="post" class="space-y-4">
       {% csrf_token %}
-      <p>
-        <label>
-          Title:<br />
-          <input type="text" name="title" value="{{ show.title }}" required />
-        </label>
-      </p>
-      <p>
-        <label>
-          Network:<br />
-          <input type="text" name="network" value="{{ show.network }}" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Release Date:<br />
-          <input type="date" name="release_date" value="{{ formatted_date }}" />
-        </label>
-      </p>
-      <p>
-        <label>
-          Description:<br />
-          <textarea name="description" rows="4" cols="40">{{ show.description }}</textarea>
-        </label>
-      </p>
-      <p>
-        <button type="submit">Update</button>
-      </p>
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Title</label>
+        <input type="text" name="title" value="{{ show.title }}" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Network</label>
+        <input type="text" name="network" value="{{ show.network }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Release Date</label>
+        <input type="date" name="release_date" value="{{ formatted_date }}" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea name="description" rows="4" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">{{ show.description }}</textarea>
+      </div>
+
+      <div class="pt-4">
+        <button type="submit" class="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700">Update</button>
+      </div>
     </form>
-  </body>
-</html>
+  </div>
+{% endblock %}

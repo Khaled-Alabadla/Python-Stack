@@ -44,13 +44,7 @@ class ShowManager(models.Manager):
 		return errors
 	
 	def edit_validator(self, postData, show_id):
-		errors = self.create_validator(postData, show_id=show_id)
-
-		# title should be unique except for the current show
-		title = postData.get('title', '').strip()
-		if title and Show.objects.filter(title=title).exclude(id=show_id).exists():
-			errors['title'] = "A show with this title already exists."
-		return errors
+		return self.create_validator(postData, show_id=show_id)
 	
 	def add_show(self, postData):
 		title = postData.get('title', '').strip()

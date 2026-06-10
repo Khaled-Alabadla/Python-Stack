@@ -1,31 +1,31 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>TV Show {{ show.id }}</title>
-  </head>
-  <body>
-    <p>
-      <a href="/shows/">Go Back</a>
-    </p>
-    <h1>TV Show {{ show.id }}</h1>
-    <p>
-      <strong>Title:</strong> {{ show.title }}
-    </p>
-    <p>
-      <strong>Network:</strong> {{ show.network }}
-    </p>
-    <p>
-      <strong>Release Date:</strong> {{ show.release_date }}
-    </p>
-    <p>
-      <strong>Description:</strong> {{ show.description }}
-    </p>
-    <p>
-      <a href="/shows/{{ show.id }}/edit">Edit</a>
-      |<form action="/shows/{{ show.id }}/destroy" method="post" style="display:inline">
-        {% csrf_token %}
-        <button type="submit" onclick="return confirm('Delete this show?')">Delete</button>
-      </form>
-    </p>
-  </body>
-</html>
+{% extends 'tv_shows_app/base.html' %}
+
+{% block title %}Show — {{ show.title }}{% endblock %}
+
+{% block content %}
+  <div class="mb-4">
+    <a href="/shows/" class="text-indigo-600 hover:underline">← Back to list</a>
+  </div>
+
+  <div class="bg-white shadow rounded p-6">
+    <div class="flex items-start justify-between">
+      <div>
+        <h1 class="text-2xl font-bold text-gray-900">{{ show.title }}</h1>
+        <p class="text-sm text-gray-500">Network: {{ show.network }}</p>
+        <p class="text-sm text-gray-500">Release Date: {{ show.release_date }}</p>
+      </div>
+      <div class="space-x-2">
+        <a href="/shows/{{ show.id }}/edit" class="inline-block bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Edit</a>
+        <form action="/shows/{{ show.id }}/destroy" method="post" class="inline">
+          {% csrf_token %}
+          <button type="submit" onclick="return confirm('Delete this show?')" class="inline-block bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">Delete</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="mt-6 text-gray-700">
+      <h3 class="font-semibold">Description</h3>
+      <p class="mt-2 whitespace-pre-line">{{ show.description }}</p>
+    </div>
+  </div>
+{% endblock %}
