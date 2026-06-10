@@ -1,0 +1,13 @@
+{% extends 'login_app/base.html' %}
+
+{% block title %}
+  Logged out — SimpleAuth
+{% endblock %}
+
+{% block content %}
+  <h2>Logged out</h2>
+  <p>You have been logged out successfully.</p>
+  <div class="actions">
+    <a class="muted-link" href="{% url 'login' %}">Sign in again</a>
+  </div>
+{% endblock %}

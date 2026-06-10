@@ -1,29 +1,25 @@
-<!DOCTYPE html>
-{% load static %}
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create a message</title>
-    <link rel="stylesheet" href="{% static 'login_app/style.css' %}" />
-  </head>
-  <body>
-    <main class="chat-container">
-      <header class="page-header">
-        <div>
-          <p class="label">Create message</p>
-          <h1>Share your idea</h1>
-        </div>
-        <a class="button secondary" href="{% url 'chat:messages_list' %}">Back to messages</a>
-      </header>
+{% extends 'base.html' %}
 
-      <section class="create-card">
-        <form method="post" action="{% url 'chat:create_message' %}" class="comment-form">
-          {% csrf_token %}
-          <textarea name="message" placeholder="Enter your message here..." required></textarea>
-          <button class="button" type="submit">Create message</button>
-        </form>
-      </section>
-    </main>
-  </body>
-</html>
+{% block title %}
+  Create a message
+{% endblock %}
+
+{% block content %}
+  <main class="chat-container">
+    <header class="page-header">
+      <div>
+        <p class="label">Create message</p>
+        <h1>Share your idea</h1>
+      </div>
+      <a class="button secondary" href="{% url 'chat:messages_list' %}">Back to messages</a>
+    </header>
+
+    <section class="create-card">
+      <form method="post" action="{% url 'chat:create_message' %}" class="comment-form">
+        {% csrf_token %}
+        <textarea name="message" placeholder="Enter your message here..." required></textarea>
+        <button class="button" type="submit">Create message</button>
+      </form>
+    </section>
+  </main>
+{% endblock %}

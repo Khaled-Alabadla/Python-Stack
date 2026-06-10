@@ -1,74 +1,86 @@
-{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Login — SimpleAuth</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}" />
+  </head>
+  <body>
+    <main class="container">
+      <div class="card">
+        <div class="brand">SimpleAuth</div>
+        <h2 style="color: #fff">Login</h2>
 
-{% block title %}
-  Login — SimpleAuth
-{% endblock %}
+        {% if messages %}
+          {% for message in messages %}
+            <p class="error">{{ message }}</p>
+          {% endfor %}
+        {% endif %}
 
-{% block content %}
-  <h2 style="color: #fff">Login</h2>
+        <form action="{% url 'login' %}" method="post" id="loginForm" novalidate>
+          {% csrf_token %}
+          <div class="field">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" />
+            <span id="email_error" class="error"></span>
+          </div>
+          <div class="field">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" autocomplete="current-password" />
+            <span id="password_error" class="error"></span>
+          </div>
 
-  {% if messages %}
-    {% for message in messages %}
-      <p class="error">{{ message }}</p>
-    {% endfor %}
-  {% endif %}
+          <button type="submit">Sign in</button>
+          <div class="actions">
+            <a class="muted-link" href="{% url 'register' %}">Create account</a>
+          </div>
+        </form>
+        <p class="footer">&copy; SimpleAuth</p>
+      </div>
+    </main>
 
-  <form action="{% url 'login' %}" method="post" id="loginForm" novalidate>
-    {% csrf_token %}
-    <div class="field">
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" autocomplete="email" />
-      <span id="email_error" class="error"></span>
-    </div>
-    <div class="field">
-      <label for="password">Password</label>
-      <input type="password" id="password" name="password" autocomplete="current-password" />
-      <span id="password_error" class="error"></span>
-    </div>
-
-    <button type="submit">Sign in</button>
-    <div class="actions">
-      <a class="muted-link" href="{% url 'register' %}">Create account</a>
-    </div>
-  </form>
-{% endblock %}
-
-{% block scripts %}
-  <script>
-    const loginForm = document.getElementById('loginForm')
-    const emailField = document.getElementById('email')
-    const passwordField = document.getElementById('password')
-    
-    function setError(field, message) {
-      const errorElement = document.getElementById(`${field.id}_error`)
-      errorElement.textContent = message || ''
-    }
-    
-    function validateEmailFormat(email) {
-      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-    }
-    
-    loginForm.addEventListener('submit', function (event) {
-      event.preventDefault()
-      let valid = true
-    
-      if (!emailField.value.trim() || !validateEmailFormat(emailField.value.trim())) {
-        setError(emailField, 'Enter a valid email address.')
-        valid = false
-      } else {
-        setError(emailField, '')
-      }
-    
-      if (!passwordField.value.trim()) {
-        setError(passwordField, 'Password is required.')
-        valid = false
-      } else {
-        setError(passwordField, '')
-      }
-    
-      if (valid) {
-        loginForm.submit()
-      }
-    })
-  </script>
-{% endblock %}
+    <script>
+      ;(function () {
+        const loginForm = document.getElementById('loginForm')
+        const emailField = document.getElementById('email')
+        const passwordField = document.getElementById('password')
+      
+        function setError(field, message) {
+          const errorElement = document.getElementById(field.id + '_error')
+          if (errorElement) errorElement.textContent = message || ''
+        }
+      
+        function validateEmailFormat(email) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+        }
+      
+        if (!loginForm) return
+      
+        loginForm.addEventListener('submit', function (event) {
+          event.preventDefault()
+          let valid = true
+      
+          if (!emailField.value.trim() || !validateEmailFormat(emailField.value.trim())) {
+            setError(emailField, 'Enter a valid email address.')
+            valid = false
+          } else {
+            setError(emailField, '')
+          }
+      
+          if (!passwordField.value.trim()) {
+            setError(passwordField, 'Password is required.')
+            valid = false
+          } else {
+            setError(passwordField, '')
+          }
+      
+          if (valid) {
+            loginForm.submit()
+          }
+        })
+      })()
+    </script>
+  </body>
+</html>
