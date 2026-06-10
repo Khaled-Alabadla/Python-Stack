@@ -9,19 +9,28 @@
         Login & Registration
       {% endblock %}
     </title>
+    <!-- Tailwind (Play CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Project styles (overrides) -->
     <link rel="stylesheet" href="{% static 'login_app/style.css' %}" />
   </head>
   <body>
-    <main class="container">
-      <header class="brand">SimpleAuth</header>
-      <section class="card">
-        {% block content %}
+    <main class="min-h-screen flex items-center justify-center py-8 bg-gray-50">
+      <div class="w-full max-w-lg px-4">
+        <div class="text-center mb-4">
+          <h1 class="text-2xl font-semibold text-blue-600">SimpleAuth</h1>
+        </div>
+        <div class="bg-white shadow rounded-lg">
+          <div class="p-6">
+            {% block content %}
 
-        {% endblock %}
-      </section>
-      <footer class="footer">
-        &copy; {{ ' ' }} {% now 'Y' %} {{ ' ' }}Khaled Alabadla
-      </footer>
+            {% endblock %}
+          </div>
+        </div>
+        <div class="text-center mt-3 text-sm text-gray-500">
+          &copy;{% now 'Y' %}Khaled Alabadla
+        </div>
+      </div>
     </main>
     {% block scripts %}
 
